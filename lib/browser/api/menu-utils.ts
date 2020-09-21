@@ -158,8 +158,8 @@ function sortGroups<T> (groups: {id?: T}[][]) {
 }
 
 export function sortMenuItems (menuItems: {type?: string, id?: string}[]) {
-  const isSeparator = (item: {type?: string}) => item.type === 'separator';
-  const separators = menuItems.filter(i => i.type === 'separator');
+  const isSeparator = (i: any) => i.type === 'separator' && !i.before && !i.after && !i.beforeGroupContaining && !i.afterGroupContaining;
+  const separators = menuItems.filter(isSeparator);
 
   // Split the items into their implicit groups based upon separators.
   const groups = splitArray(menuItems, isSeparator);

@@ -599,6 +599,32 @@ describe('Menu module', function () {
         expect(menuTwo.items[2].label).to.equal('c');
       });
 
+      it('should only filter excess menu separators AFTER the re-ordering for before/after is done', () => {
+        const menuOne = Menu.buildFromTemplate([
+          {
+            type: 'separator'
+          },
+          {
+            type: 'normal',
+            label: 'Foo',
+            id: 'foo'
+          },
+          {
+            type: 'normal',
+            label: 'Bar',
+            id: 'bar'
+          },
+          {
+            type: 'separator',
+            before: ['bar']
+          }]);
+
+        expect(menuOne.items).to.have.length(3);
+        expect(menuOne.items[0].label).to.equal('Foo');
+        expect(menuOne.items[1].type).to.equal('separator');
+        expect(menuOne.items[2].label).to.equal('Bar');
+      });
+
       it('should continue inserting items at next index when no specifier is present', () => {
         const menu = Menu.buildFromTemplate([
           {
